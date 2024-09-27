@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Football;
 
@@ -62,7 +63,23 @@ public class Team
 
     public void Move()
     {
-        GetClosestPlayerToBall().MoveTowardsBall();
-        Players.ForEach(player => player.Move());
+        // Движение игроков к мячу
+        Players.ForEach(player =>
+        {
+            player.MoveTowardsBall();
+            player.Move();
+        });
+    }
+    public void Draw()
+    {
+        Console.ForegroundColor = Name == "Home Team" ? ConsoleColor.Blue : ConsoleColor.Red;
+
+        foreach (var player in Players)
+        {
+            Console.SetCursorPosition((int)player.X, (int)player.Y);
+            Console.Write("¤"); // Рисуем игрока символом ¤
+        }
+
+        Console.ResetColor(); // Сброс цвета
     }
 }
