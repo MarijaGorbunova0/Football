@@ -4,8 +4,8 @@ namespace Football;
 
 public class Ball
 {
-    public double X { get; private set; }
-    public double Y { get; private set; }
+    public double X { get; set; }
+    public double Y { get; set; }
 
     private double _vx, _vy;
 
@@ -16,6 +16,7 @@ public class Ball
         _game = game;
         X = x;
         Y = y;
+        this.Draw();
     }
 
     public void SetSpeed(double vx, double vy)
@@ -26,6 +27,8 @@ public class Ball
 
     public void Move()
     {
+        Console.SetCursorPosition((int)this.X, (int)this.Y);
+        Console.Write(" ");
         double newX = X + _vx;
         double newY = Y + _vy;
         if (_game.Stadium.IsIn(newX, newY))
@@ -38,10 +41,16 @@ public class Ball
             _vx = 0;
             _vy = 0;
         }
+        this.Draw();
     }
     public void Draw()
     {
-        Console.SetCursorPosition((int)X, (int)Y); 
-        Console.Write("@"); 
+        ConsoleColor currentColor = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.Cyan;
+
+        Console.SetCursorPosition((int)this.X, (int)this.Y);
+        Console.Write("@");
+
+        Console.ForegroundColor = currentColor;
     }
 }

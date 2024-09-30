@@ -63,12 +63,10 @@ public class Team
 
     public void Move()
     {
-        // Движение игроков к мячу
-        Players.ForEach(player =>
-        {
-            player.MoveTowardsBall();
-            player.Move();
-        });
+        // Lähim mängija liigub palli poole
+        GetClosestPlayerToBall().MoveTowardsBall();
+        // Kõik mängijad liiguvad
+        Players.ForEach(player => player.Move());
     }
     public void Draw()
     {

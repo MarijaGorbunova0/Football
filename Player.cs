@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Football;
 
@@ -14,28 +15,34 @@ public class Player
     private const double MaxSpeed = 5;
     private const double MaxKickSpeed = 25;
     private const double BallKickDistance = 10; // дальность удара
-
+    public ConsoleColor _color { get; private set; }
     // Juhuslike arvude generaator juhuslike löögikiiruste genereerimiseks
     private Random _random = new Random();
+    public char _sym { get; private set; }
 
     public Player(string name)
     {
         Name = name;
     }
 
-    public Player(string name, double x, double y, Team team)
+    public Player(string name, double x, double y, Team team, char sym)
     {
         Name = name;
         X = x;
         Y = y;
         Team = team;
+        _sym = sym;
     }
-
+    public void SetSymbol(char sym)
+    {
+        this._sym = sym;
+    }
     // Mängija positsiooni määramine väljakul
     public void SetPosition(double x, double y)
     {
         X = x;
         Y = y;
+        this.Draw();
     }
     // Hankige mängija absoluutne positsioon, võttes arvesse meeskonna positsiooni
     public (double, double) GetAbsolutePosition()
@@ -43,6 +50,11 @@ public class Player
         return Team!.Game.GetPositionForTeam(Team, X, Y);
     }
     // Arvutage kaugus mängijast pallini
+    public void SetColor(ConsoleColor color)
+    {
+        _color = color;
+    }
+
     public double GetDistanceToBall()
     {
         var ballPosition = Team!.GetBallPosition();
@@ -94,5 +106,15 @@ public class Player
         {
             _vx = _vy = 0;
         }
+        this.Draw();
+    }
+    public void Draw()
+    {
+        ConsoleColor currColor = Console.ForegroundColor;
+        Console.ForegroundColor = _color;
+        Console.SetCursorPosition((int)this.X, (int)this.Y);
+        Console.Write(_sym);
+        Console.ForegroundColor = currColor;
+
     }
 }
