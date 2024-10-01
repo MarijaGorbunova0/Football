@@ -23,11 +23,11 @@ public class Stadium
         {
             for (int x = 0; x <= Width; x++)
             {
-                if (x == 0 || x == Width) // Линии по бокам
+                if (x == 0 || x == Width) 
                 {
                     Console.Write("|");
                 }
-                else if (y == 0 || y == Height) // Линии сверху и снизу
+                else if (y == 0 || y == Height) 
                 {
                     Console.Write("-");
                 }

@@ -6,7 +6,7 @@ public class Game
     public Team AwayTeam { get; }
     public Stadium Stadium { get; }
     public Ball Ball { get; private set; }
-
+    public int teamScore = 0;
     public Game(Team homeTeam, Team awayTeam, Stadium stadium)
     {
         HomeTeam = homeTeam;
@@ -21,6 +21,7 @@ public class Game
         Ball = new Ball(Stadium.Width / 2, Stadium.Height / 2, this);
         HomeTeam.StartGame(Stadium.Width / 2, Stadium.Height);
         AwayTeam.StartGame(Stadium.Width / 2, Stadium.Height);
+        
     }
     private (double, double) GetPositionForAwayTeam(double x, double y)
     {
@@ -48,7 +49,21 @@ public class Game
             Ball.SetSpeed(-vx, -vy);
         }
     }
+    public void CheckForGoal(Gates gates, ref int teamScore, string teamName)
+    {
+        if (Ball.X >= gates.x && Ball.X <= gates.x + 20 && Ball.Y >= gates.y && Ball.Y <= gates.y + 20)
+        {
+            teamScore++; 
+            Console.SetCursorPosition(0, teamName == "Home" ? 0 : 1);
+            ResetBall(); 
+        }
+    }
 
+    public void ResetBall()
+    {
+        Ball.X = 50; 
+        Ball.Y = 25;
+    }
     public void Move()
     {
         HomeTeam.Move();

@@ -53,4 +53,9 @@ public class Ball
 
         Console.ForegroundColor = currentColor;
     }
+    public void SetPosition(int x, int y)
+    {
+        X = x;
+        Y = y; 
+    }
 }

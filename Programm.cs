@@ -9,7 +9,8 @@ namespace Football
             
             Team homeTeam = new Team("Home Team");
             Team awayTeam = new Team("Away Team");
-
+            int homeTeamCount = 0;
+            int awayTeamCount = 0;
             List<Team> teams = new List<Team>() { homeTeam, awayTeam };
 
 
@@ -21,28 +22,28 @@ namespace Football
                 }
             }
 
-            Stadium stadium = new Stadium(100, 50); // Width, Height
+            Stadium stadium = new Stadium(100, 50); 
             Game game = new Game(homeTeam, awayTeam, stadium);
 
-            Gates awayGates = new Gates('*', 7, 15); // X = 7, Y = 15
-            awayGates.CreateGates();
+            Gates awayGates = new Gates('*', 1, 15); 
+            
            
 
 
-            Gates homeGates = new Gates('*', 93, 15); // X = 93, Y = 15
-            homeGates.CreateGates();
+            Gates homeGates = new Gates('*', 80, 15);
+        
 
             homeTeam.StartGame(stadium.Width, stadium.Height);
             awayTeam.StartGame(stadium.Width, stadium.Height);
            
              Console.Clear();
+             
              stadium.Draw(); 
              awayTeam.Draw();
              homeTeam.Draw();
-             awayGates.CreateGates();
-             homeGates.CreateGates();
-
-            // Start the game
+             awayGates.CreateGates(homeTeamCount);
+             homeGates.CreateGates(awayTeamCount);
+   
             game.Start();
 
             while (true)
@@ -50,16 +51,12 @@ namespace Football
                
                 Thread.Sleep(500);
                 game.Move();
-                awayGates.ball = game.Ball;
-                Console.SetCursorPosition(0, 0);
-                Console.WriteLine("Away team ");
-                awayGates.Counter();
 
+                game.CheckForGoal(awayGates, ref homeTeamCount, "Home");
+                game.CheckForGoal(homeGates, ref awayTeamCount, "Away");
 
-                homeGates.ball = game.Ball;
                 Console.SetCursorPosition(0, 2);
-                Console.WriteLine("Home team ");
-                homeGates.Counter();
+                Console.WriteLine($"Home Team: {homeTeamCount} | Away Team: {awayTeamCount}");
 
             }
 

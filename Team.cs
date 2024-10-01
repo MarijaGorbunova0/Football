@@ -38,12 +38,10 @@ public class Team
     {
         return Game.GetBallPositionForTeam(this);
     }
-
     public void SetBallSpeed(double vx, double vy)
     {
         Game.SetBallSpeedForTeam(this, vx, vy);
     }
-
     public Player GetClosestPlayerToBall()
     {
         Player closestPlayer = Players[0];
@@ -75,9 +73,9 @@ public class Team
         foreach (var player in Players)
         {
             Console.SetCursorPosition((int)player.X, (int)player.Y);
-            Console.Write("¤"); // Рисуем игрока символом ¤
+            Console.Write("¤");
         }
 
-        Console.ResetColor(); // Сброс цвета
+        Console.ResetColor(); 
     }
 }
